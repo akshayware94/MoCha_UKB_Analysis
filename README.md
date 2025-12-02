@@ -88,3 +88,22 @@ To run MoChA (or any Axiom-based CNV/LOH pipeline), we must:
 
 ### Download Resources
 You will need both private **UKBB resources** and public **Affymetrix/UKBB metadata**.
+
+**Private resources (requires UKBB approval)**
+```
+ukb_sqc_v2.txt
+ukb_cal_chr{1..22,X,Y,XY,MT}_v2.bed      # 92 GiB
+ukb_int_chr{1..22,X,Y,XY,MT}_v2.bin      # 2.9 TiB
+```
+**Public resources**
+Use the following commands:
+```
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/auxdata/ukb_snp_posterior_chrX_haploid.bim
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/auxdata/ukb_snp_posterior.tar
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/auxdata/ukb_snp_bim.tar
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/auxdata/ukb_snp_posterior.batch
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/auxdata/ukb_snp_qc.txt
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/ukb_genetic_data_description.txt
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/Array_BIL_34.zip
+wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/Array_UKB_34.zip
+```
