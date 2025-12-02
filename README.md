@@ -126,3 +126,118 @@ Compile three lightweight C tools that enable high-speed processing of large UKB
 ```unpack``` — decode PLINK .bed into Affymetrix genotype structure <br />
 ```split``` — divide binary resources into batch files <br />
 ```dump``` — convert binary floats for SNP posterior reconstruction <br />
+
+- Install dependencies:
+  Make sure the GNU C compiler and C Library are available to compile three auxiliary tools (Debian/Ubuntu specific if you have admin privileges)
+  
+```
+sudo apt install --no-install-recommends gcc libc6-dev
+```
+Generate a small ELF binary file that we will use to efficiently unpack PLINK binary files
+
+```
+echo '#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main(int argc, char **argv) {
+  if (argc != 3)
+    return 1;
+  int i, n, nread, swap;
+  if (sscanf(argv[1], "%d", &n) != 1)
+    return 1;
+  char *in_buffer = (char *)malloc((n + 3) / 4 * sizeof(char));
+  char *out_buffer = (char *)malloc((n + 3) / 4 * 4 * sizeof(char));
+  FILE *in = fopen(argv[2], "r");
+  while ((nread = fread(in_buffer, 1, (n + 3) / 4, stdin))) {
+    if (nread != (n + 3) / 4)
+      return 1;
+    if (fscanf(in, "%d\n", &swap) != 1)
+      return 1;
+    for (i = 0; i < (n + 3) / 4; i++) {
+      char x = in_buffer[i];
+      char y = (swap ? (~x & 0xAA) : (x & 0x55) << 1) ^
+               ((x & 0x55) ^ ((x & 0xAA) >> 1));
+      int z = (int)(y & 0x03) ^ ((int)(y & 0x0C) << 6) ^
+              ((int)(y & 0x30) << 12) ^ ((int)(y & 0xC0) << 18) ^ 0x30303030;
+      memcpy(&out_buffer[4 * i], &z, 4);
+    }
+    fwrite(out_buffer, 1, n, stdout);
+  }
+  free(in_buffer);
+  free(out_buffer);
+  return 0;
+}' > unpack.c
+gcc -O3 -o unpack unpack.c
+```
+Generate a small ELF binary file that we will use to efficiently split binary resources by batches
+
+```
+echo '#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main(int argc, char **argv) {
+  if (argc != 3)
+    return 1;
+  int i, nread, n = 0, m = 4;
+  int *offsets = (int *)malloc(m * sizeof(int));
+  FILE **batches = (FILE **)malloc(m * sizeof(FILE *));
+  FILE *in = fopen(argv[2], "r");
+  char buffer[BUFSIZ];
+  offsets[0] = 0;
+  while (fscanf(in, "%d %s\n", &i, buffer) == 2) {
+    sprintf(buffer + strlen(buffer), "%s", argv[1]);
+    batches[n] = fopen(buffer, "w");
+    n++;
+    if (n == m) {
+      m <<= 1;
+      offsets = (int *)realloc(offsets, m * sizeof(int));
+      batches = (FILE **)realloc(batches, m * sizeof(FILE *));
+    }
+    offsets[n] = offsets[n - 1] + i;
+  }
+  fclose(in);
+  char *line = (char *)malloc(offsets[n] * sizeof(char *));
+  while ((nread = fread(line, 1, offsets[n], stdin))) {
+    if (nread != offsets[n])
+      return 1;
+    for (i = 0; i < n; i++)
+      fwrite(line + offsets[i], 1, offsets[i + 1] - offsets[i], batches[i]);
+  }
+  for (i = 0; i < n; i++)
+    fclose(batches[i]);
+  free(offsets);
+  free(batches);
+  free(line);
+  return 0;
+}' > split.c
+gcc -O3 -o split split.c
+```
+Generate a small ELF binary file that we will use to efficiently convert binary floats
+
+```
+echo '#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main(int argc, char **argv) {
+  if (argc != 3)
+    return 1;
+  int i, j, n, m, nread;
+  if (sscanf(argv[1], "%d", &n) != 1)
+    return 1;
+  if (sscanf(argv[2], "%d", &m) != 1)
+    return 1;
+  char *buffer = (char *)malloc(n * m * sizeof(float));
+  while ((nread = fread(buffer, sizeof(float), n * m, stdin))) {
+    if (nread != n * m)
+      return 1;
+    for (i = 0; i < n; i++)
+      for (j = 0; j < m; j++)
+        fprintf(stdout, "%g%c", *(float *)&buffer[4 * (n * j + i)],
+                j + 1 == m ? 0x0A : 0x09);
+  }
+  free(buffer);
+  return 0;
+}' > dump.c
+gcc -O3 -o dump dump.c
+```
+
