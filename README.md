@@ -12,7 +12,13 @@ It includes:
 This repository is designed as a complete end-to-end resource for large-scale mosaic event analysis in UK Biobank.
 
 ## Installation
-The tools required to reconstruct raw Affymetrix files for each of the 106 UK Biobank batches, as well as those needed to run the MoChA WDL pipeline, are listed below. <br />
+Below are the core dependencies required to reconstruct UKB raw intensity files and run the MoChA WDL pipeline. <br />
+
+#System Requirements
+
+1. Unix-based OS (Linux recommended)
+2. At least 6-8 TB free disk space for reconstruction and MoChA outputs
+3. Access to UKB Project Space or local UKB genotype data
 
 >
   ```
