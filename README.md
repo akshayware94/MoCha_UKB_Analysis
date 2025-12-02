@@ -3,11 +3,11 @@
 This repository contains workflows, scripts, and documentation for running the MoChA (Mosaic Chromosomal Alterations) WDL pipeline on UK Biobank genotype array data.
 It includes:
 
-Tools and instructions to reconstruct raw Affymetrix CEL-like files for each of the 106 UKB genotyping batches using ukb2txt.
+1. Tools and instructions to reconstruct raw Affymetrix CEL-like files for each of the 106 UKB genotyping batches using ukb2txt.
 
-A reproducible workflow for calling mosaic chromosomal alterations (including mLOY, mLOX, and autosomal mCAs) using the official MoChA WDL pipeline.
+2. A reproducible workflow for calling mosaic chromosomal alterations (including mLOY, mLOX, and autosomal mCAs) using the official MoChA WDL pipeline.
 
-Supplementary scripts for preprocessing, QC, formatting input files, and downstream analysis.
+3. Supplementary scripts for preprocessing, QC, formatting input files, and downstream analysis.
 
 This repository is designed as a complete end-to-end resource for large-scale mosaic event analysis in UK Biobank.
 
