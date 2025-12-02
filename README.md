@@ -125,4 +125,4 @@ While Affymetrix orders marker's alleles according to an internal designation of
 Compile three lightweight C tools that enable high-speed processing of large UKBB files:
 ```unpack``` — decode PLINK .bed into Affymetrix genotype structure <br />
 ```split``` — divide binary resources into batch files <br />
-```dump``` — convert binary floats for SNP posterior reconstruction
+```dump``` — convert binary floats for SNP posterior reconstruction <br />
