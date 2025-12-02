@@ -122,7 +122,7 @@ zcat Array_UKB_34.zip | \
 While Affymetrix orders marker's alleles according to an internal designation of alleles as A and B, the UK biobank has reordered the alleles for each marker in the genotype and SNP posterior (but not intensity) files as reference and alternate with respect to GRCh37. We will therefore recover information about which markers have A and B alleles swapped when compared to reference and alternate alleles and use this information to recover the original genotypes. The same list of markers were swapped for SNP posterior files, with the exception of ten Affymetrix indels (AX-82920347, AX-82999350, AX-83057578, AX-83106285, AX-83149193, AX-83166262, AX-83197070, AX-83253475, AX-83575267, AX-83587806) which, for unclear reasons, were inconsistently swapped between genotype files and SNP posterior files and incorrectly so in the SNP posterior files
 
 **Build Auxiliary Tools**
-Compile three lightweight C tools that enable high-speed processing of large UKBB files:
+Compile three lightweight C tools that enable high-speed processing of large UKBB files: <br />
 ```unpack``` — decode PLINK .bed into Affymetrix genotype structure <br />
 ```split``` — divide binary resources into batch files <br />
 ```dump``` — convert binary floats for SNP posterior reconstruction <br />
