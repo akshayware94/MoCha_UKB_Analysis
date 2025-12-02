@@ -1,4 +1,4 @@
-# *Automated MoChA-WDL Workflow for Chromosomal Mosaicism in UKB*
+# *UK Biobank Structural Mosaicism Analysis Using MoChA-WDL*
 ## Overview
 This repository contains workflows, scripts, and documentation for running the MoChA (Mosaic Chromosomal Alterations) WDL pipeline on UK Biobank genotype array data.
 It includes:
