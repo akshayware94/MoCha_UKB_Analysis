@@ -49,7 +49,9 @@ sudo apt-get install -y bcftools plink
 ```
 ## Acquiring and Storing UK Biobank Genotype Intensity Data
 Genotyping was conducted by Affymetrix (now ThermoFisher Scientific) using two closely related, custom-designed arrays. Approximately 50,000 participants were genotyped on the UK BiLEVE Axiom array, while the remaining ~450,000 participants were genotyped on the UK Biobank Axiom array. The released dataset combines results from both arrays, encompassing 805,426 markers with genomic positions reported in GRCh37 coordinates. Genotypes could not be obtained for a small subset of participants (~3%) due to insufficient DNA from their blood samples.
+
 The distributed PLINK files encode alleles such that A1 and A2 correspond to the reference and alternate alleles relative to the GRCh37 human genome (except in cases where neither allele matches the reference). This encoding does not reflect the Affymetrix probeset designations of A and B alleles. Because MoChA requires the B-allele identity to correctly interpret B-allele frequency (BAF), it is necessary to recover the A/B allele assignments from the Affymetrix array manifest files.
+
 A key advantage of reconstructing the UK Biobank intensity and genotype data back into raw, batch-level Affymetrix files (excluding markers removed during QC) is that the MoChA WDL pipeline can process these files directly. This also enables conversion of the data into VCF format aligned to GRCh38 when required.
 
 **Downloading UK Biobank Intensity Data Using the dx Tool**
@@ -68,11 +70,42 @@ Select the appropriate UKB project/workspace with dx select.
 Locating the intensity files:
 Within the workspace, intensity data typically resides under paths such as:
 
-```Bulk/Genotype Results/Genotype intensity data/```
+```Bulk/Genotype Results/Genotype intensity data/``` <br />
 ```Bulk/Genotype Results/Genotype copy number variants/```
 
-Users can list files using:
+Users can list files using: <br />
+```dx ls path/to/folder/```
 
+Downloading the files: <br />
+Once the correct files are identified, they can be downloaded using: <br />
+```dx download file_path```  
+
+## Running the Conversion Directly with Cromwell
+
+If you prefer to run the entire UKB → raw Affymetrix conversion using Cromwell, you can skip the detailed manual steps and execute the ukb2txt.wdl workflow directly. To do this, prepare a JSON input file similar to the example below:
+```
+{
+  "ukb2txt.sqc_path": "gs://fc-9a7c5487-04c9-4182-b3ec-13de7f6b409b/imputed",
+  "ukb2txt.cal_path": "gs://fc-9a7c5487-04c9-4182-b3ec-13de7f6b409b/genotype",
+  "ukb2txt.int_path": "gs://fc-9a7c5487-04c9-4182-b3ec-13de7f6b409b/genotype"
+}
+```
+**What each path represents** <br />
+You must specify the cloud paths where the required private UKB intensity/genotype resources are stored: <br />
+- ```sqc_path``` → Directory containing ukb_sqc_v2.txt <br />
+- ```cal_path``` → Directory containing ukb_cal_chr{1..22,X,Y,XY,MT}_v2.bed <br />
+- ```int_path``` → Directory containing ukb_int_chr{1..22,X,Y,XY,MT}_v2.bin <br />
+
+These files are essential inputs for reconstructing raw Affymetrix-style outputs.
+
+**Important notes**<br />
+- Ensure that all resources are correct, complete, and uncorrupted.
+- The paths must point to locations that Cromwell/Google Cloud can read.
+- Once the JSON is prepared, you can launch the workflow with a standard Cromwell command such as:
+```
+java -jar cromwell.jar run ukb2txt.wdl --inputs inputs.json
+
+```
 
 ## ukb2txt — Phase 1: Reconstructing Raw Affymetrix Files for UK Biobank
 
