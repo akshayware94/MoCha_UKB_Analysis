@@ -72,3 +72,16 @@ UK Biobank provides genotype and intensity resources in merged chromosome-wide b
 ```ukb_sqc_v2.txt``` — sample tracker
 
 These formats differ significantly from standard Affymetrix Axiom batch-level deliverables:
+
+```
+*.AxiomGT1.report.txt
+*.AxiomGT1.snp-posteriors.txt
+*.AxiomGT1.calls.txt
+*.AxiomGT1.confidences.txt
+*.AxiomGT1.summary.txt
+```
+
+To run MoChA (or any Axiom-based CNV/LOH pipeline), we must:
+- Recover A/B allele orientation using array manifests
+- Split merged binary files into 106 original UKBB batches
+- Reconstruct all Affymetrix output files with correct formats
