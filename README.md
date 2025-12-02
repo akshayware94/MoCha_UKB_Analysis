@@ -85,3 +85,6 @@ To run MoChA (or any Axiom-based CNV/LOH pipeline), we must:
 - Recover A/B allele orientation using array manifests
 - Split merged binary files into 106 original UKBB batches
 - Reconstruct all Affymetrix output files with correct formats
+
+### Download Resources
+You will need both private **UKBB resources** and public **Affymetrix/UKBB metadata**.
