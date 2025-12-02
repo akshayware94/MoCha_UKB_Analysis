@@ -309,3 +309,20 @@ sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
     gzip > $batch.AxiomGT1.summary.txt.gz && /bin/rm $batch.summary.bin
 done
 ```
+**Prepare input files required for MoChA WDL** <br />
+Create sample table
+```
+sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
+  awk 'BEGIN {print "sample_id\tbatch_id\tcel\tcomputed_gender\tcall_rate"}
+  {printf "%s\t%s\t%s\t%s\t%s\n",$1,$4,$1,$11,$7/100}' > ukb.sample.tsv
+```
+
+Create batch table
+```
+sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
+  cut -d" " -f3,4 | uniq -c | \
+  awk 'BEGIN {csv["UKBB"]="Axiom_UKB_WCSG.na34.annot.csv.gz"; csv["UKBL"]="Axiom_UKBiLEVE.na34.annot.csv.gz"
+  print "batch_id\tn_smpls\tcsv\tsnp\treport\tcalls\tsummary"}
+  {printf "%s\t%s\t%s\t%s.AxiomGT1.snp-posteriors.txt.gz\t%s.AxiomGT1.report.txt.gz\t%s.AxiomGT1.calls.txt.gz\t%s.AxiomGT1.summary.txt.gz\n",
+  $3,$1,csv[$2],$3,$3,$3,$3}' > ukb.batch.tsv
+```
