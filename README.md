@@ -29,5 +29,21 @@ Below are the core dependencies required to reconstruct UKB raw intensity files 
 5. bcftools       (VCF processing)
 6. plink/plink2   (genotype file manipulation)
 7. shapeit4       (phasing)
-
   ```
+### Install Example (Ubuntu)
+
+```
+# Install Java
+sudo apt-get update
+sudo apt-get install -y default-jre
+
+# Install Docker
+sudo apt-get install -y docker.io
+sudo usermod -aG docker $USER
+
+# Install Cromwell
+wget https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85.jar
+
+# Install bcftools and plink
+sudo apt-get install -y bcftools plink
+```
