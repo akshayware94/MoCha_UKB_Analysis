@@ -1,4 +1,4 @@
-# *MoCha_UKB_Analysis*
+# *MoChA-WDL UKB Analysis*
 ## Overview
 This repository contains workflows, scripts, and documentation for running the MoChA (Mosaic Chromosomal Alterations) WDL pipeline on UK Biobank genotype array data.
 It includes:
