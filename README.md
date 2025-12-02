@@ -14,7 +14,7 @@ This repository is designed as a complete end-to-end resource for large-scale mo
 ## Installation
 Below are the core dependencies required to reconstruct UKB raw intensity files and run the MoChA WDL pipeline. <br />
 
-# System Requirements
+## System Requirements
 
 1. Unix-based OS (Linux recommended)
 2. At least 6-8 TB free disk space for reconstruction and MoChA outputs
