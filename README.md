@@ -1,4 +1,7 @@
 # *UK Biobank Structural Mosaicism Analysis Using MoChA-WDL*
+
+<small><em>Note: This tutorial is entirely based on the scripts, code, and instructions provided by the MoChA-WDL developers. All materials were obtained from their official GitHub repository ([https://github.com/freeseek/mochawdl/tree/master](https://github.com/freeseek/mochawdl/tree/master)). The code presented below has been tested by us.</em></small>
+
 ## Overview
 This repository contains workflows, scripts, and documentation for running the MoChA (Mosaic Chromosomal Alterations) WDL pipeline on UK Biobank genotype array data.
 It includes:
