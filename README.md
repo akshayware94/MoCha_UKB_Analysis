@@ -47,3 +47,9 @@ wget https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85
 # Install bcftools and plink
 sudo apt-get install -y bcftools plink
 ```
+
+## ukb2txt — Phase 1: Reconstructing Raw Affymetrix Files for UK Biobank
+
+This module documents Phase 1 of the UK Biobank mosaic-chromosomal-alteration pipeline:
+1. Reconstructing raw Affymetrix Axiom batch-specific files using ukb2txt for downstream use in the MoChA WDL pipeline.
+2. UK Biobank provides genotype and intensity data in non-standard merged formats. The ukb2txt workflow reverses these transformations to recover the original Affymetrix structure (per-batch SNP posterior, calls, summary / intensity) required by MoChA.
