@@ -89,13 +89,13 @@ To run MoChA (or any Axiom-based CNV/LOH pipeline), we must:
 ### Download Resources
 You will need both private **UKBB resources** and public **Affymetrix/UKBB metadata**.
 
-**Private resources (requires UKBB approval)**
+**Private resources (requires UKBB approval)** <br />
 ```
 ukb_sqc_v2.txt
 ukb_cal_chr{1..22,X,Y,XY,MT}_v2.bed      # 92 GiB
 ukb_int_chr{1..22,X,Y,XY,MT}_v2.bin      # 2.9 TiB
 ```
-**Public resources**
+**Public resources** <br />
 Use the following commands:
 ```
 wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/auxdata/ukb_snp_posterior_chrX_haploid.bim
@@ -107,7 +107,7 @@ wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/ukb_g
 wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/Array_BIL_34.zip
 wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/Array_UKB_34.zip
 ```
-**Fix truncated Affymetrix manifest sequences**
+**Fix truncated Affymetrix manifest sequences** <br />
 For some reasons, the length of the flanking sequence field in the manifest files is capped at 250 characters. This causes the flanking sequences of three Affymetrix indels (Affx-89015252, Affx-92046163, Affx-92047500) to be truncated. The following commands can fix this issue
 ```
 zcat Array_BIL_34.zip | \
@@ -121,7 +121,7 @@ zcat Array_UKB_34.zip | \
 ```
 While Affymetrix orders marker's alleles according to an internal designation of alleles as A and B, the UK biobank has reordered the alleles for each marker in the genotype and SNP posterior (but not intensity) files as reference and alternate with respect to GRCh37. We will therefore recover information about which markers have A and B alleles swapped when compared to reference and alternate alleles and use this information to recover the original genotypes. The same list of markers were swapped for SNP posterior files, with the exception of ten Affymetrix indels (AX-82920347, AX-82999350, AX-83057578, AX-83106285, AX-83149193, AX-83166262, AX-83197070, AX-83253475, AX-83575267, AX-83587806) which, for unclear reasons, were inconsistently swapped between genotype files and SNP posterior files and incorrectly so in the SNP posterior files
 
-**Build Auxiliary Tools**
+**Build Auxiliary Tools** <br />
 Compile three lightweight C tools that enable high-speed processing of large UKBB files: <br />
 ```unpack``` — decode PLINK .bed into Affymetrix genotype structure <br />
 ```split``` — divide binary resources into batch files <br />
