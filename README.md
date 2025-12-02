@@ -47,6 +47,32 @@ wget https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85
 # Install bcftools and plink
 sudo apt-get install -y bcftools plink
 ```
+## Acquiring and Storing UK Biobank Genotype Intensity Data
+Genotyping was conducted by Affymetrix (now ThermoFisher Scientific) using two closely related, custom-designed arrays. Approximately 50,000 participants were genotyped on the UK BiLEVE Axiom array, while the remaining ~450,000 participants were genotyped on the UK Biobank Axiom array. The released dataset combines results from both arrays, encompassing 805,426 markers with genomic positions reported in GRCh37 coordinates. Genotypes could not be obtained for a small subset of participants (~3%) due to insufficient DNA from their blood samples.
+The distributed PLINK files encode alleles such that A1 and A2 correspond to the reference and alternate alleles relative to the GRCh37 human genome (except in cases where neither allele matches the reference). This encoding does not reflect the Affymetrix probeset designations of A and B alleles. Because MoChA requires the B-allele identity to correctly interpret B-allele frequency (BAF), it is necessary to recover the A/B allele assignments from the Affymetrix array manifest files.
+A key advantage of reconstructing the UK Biobank intensity and genotype data back into raw, batch-level Affymetrix files (excluding markers removed during QC) is that the MoChA WDL pipeline can process these files directly. This also enables conversion of the data into VCF format aligned to GRCh38 when required.
+
+**Downloading UK Biobank Intensity Data Using the dx Tool**
+- Access via DNAnexus:
+UK Biobank genotype intensity files (e.g., A/B intensities, BAF/LLR files, and other array-level data) are stored within the UK Biobank DNAnexus workspace. These files cannot be downloaded directly from the UKB portal; they must be retrieved using DNAnexus tools.
+
+- Use of the dx command-line tool:
+The recommended way to download intensity data is through the dx CLI on DNAnexus. This tool connects your local machine (or HPC/VM) to the cloud workspace where the UKB data resides.
+
+- Authentication and setup:
+Before downloading, users must:
+
+Install the DNAnexus SDK (dx-toolkit).
+Authenticate using dx login.
+Select the appropriate UKB project/workspace with dx select.
+Locating the intensity files:
+Within the workspace, intensity data typically resides under paths such as:
+
+```Bulk/Genotype Results/Genotype intensity data/```
+```Bulk/Genotype Results/Genotype copy number variants/```
+
+Users can list files using:
+
 
 ## ukb2txt — Phase 1: Reconstructing Raw Affymetrix Files for UK Biobank
 
