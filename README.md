@@ -53,3 +53,13 @@ sudo apt-get install -y bcftools plink
 This module documents Phase 1 of the UK Biobank mosaic-chromosomal-alteration pipeline:
 1. Reconstructing raw Affymetrix Axiom batch-specific files using ukb2txt for downstream use in the MoChA WDL pipeline.
 2. UK Biobank provides genotype and intensity data in non-standard merged formats. The ukb2txt workflow reverses these transformations to recover the original Affymetrix structure (per-batch SNP posterior, calls, summary / intensity) required by MoChA.
+
+Unlike other biobanks (FINNGEN, MVP) that distribute microarray batch files directly, UK Biobank:
+
+- Merges intensities across all batches into .bin files
+- Encodes genotypes using GRCh37 ref/alt alleles rather than A/B alleles
+- Removes probesets such as JAK2 V617F, leaving intensities unavailable in standard output
+- Provides LRR/BAF files with missing intensities for many SNPs
+
+Because MoChA requires accurate A/B allele designations and batch-specific intensities, we reconstruct the raw Affymetrix files using the official manifests and UKBB binary sources.
+This phase outputs 2.4 TiB of gzipped Affymetrix batch files that can be consumed directly by the MoChA WDL workflow.
