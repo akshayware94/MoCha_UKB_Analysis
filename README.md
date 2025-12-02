@@ -22,6 +22,12 @@ Below are the core dependencies required to reconstruct UKB raw intensity files 
 
 >
   ```
-  1. JAVA
-  2. Docker
+1. Java 8+        (needed for WDL and Cromwell)
+2. Docker         (required for running WDL tasks)
+3. Cromwell       (for executing WDL workflows)
+4. ukb2txt        (to reconstruct Affymetrix raw intensity files)
+5. bcftools       (VCF processing)
+6. plink/plink2   (genotype file manipulation)
+7. shapeit4       (phasing)
+
   ```
