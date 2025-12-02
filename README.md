@@ -387,4 +387,10 @@ sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
   {printf "%s\t%s\t%s\t%s.AxiomGT1.snp-posteriors.txt.gz\t%s.AxiomGT1.report.txt.gz\t%s.AxiomGT1.calls.txt.gz\t%s.AxiomGT1.summary.txt.gz\n",
   $3,$1,csv[$2],$3,$3,$3,$3}' > ukb.batch.tsv
 ```
-## MoChA-WDL — Phase 2: Running MoChA WDL Pipeline
+## MoChA-WDL — Phase 2: Calling Mosaic Chromosomal Alterations (mCAs) in UK Biobank
+After reconstructing per-batch Affymetrix files in Phase 1, Phase 2 runs the full MoChA WDL pipeline to call:
+- Autosomal mosaic duplications & deletions
+- Copy-neutral LOH (cn-LOH)
+- Mosaic loss of Y (mLOY)
+- Mosaic loss of X (mLOX)
+- Allele-specific events across all chromosomes (1–22, X, Y, XY, MT)
