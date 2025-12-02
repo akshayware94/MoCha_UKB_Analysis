@@ -107,7 +107,7 @@ wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/ukb_g
 wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/Array_BIL_34.zip
 wget -nd --no-check-certificate biobank.ctsu.ox.ac.uk/crystal/crystal/docs/Array_UKB_34.zip
 ```
-**Fix truncated Affymetrix manifest sequences** <br />
+### Fix truncated Affymetrix manifest sequences
 For some reasons, the length of the flanking sequence field in the manifest files is capped at 250 characters. This causes the flanking sequences of three Affymetrix indels (Affx-89015252, Affx-92046163, Affx-92047500) to be truncated. The following commands can fix this issue
 ```
 zcat Array_BIL_34.zip | \
@@ -121,7 +121,7 @@ zcat Array_UKB_34.zip | \
 ```
 While Affymetrix orders marker's alleles according to an internal designation of alleles as A and B, the UK biobank has reordered the alleles for each marker in the genotype and SNP posterior (but not intensity) files as reference and alternate with respect to GRCh37. We will therefore recover information about which markers have A and B alleles swapped when compared to reference and alternate alleles and use this information to recover the original genotypes. The same list of markers were swapped for SNP posterior files, with the exception of ten Affymetrix indels (AX-82920347, AX-82999350, AX-83057578, AX-83106285, AX-83149193, AX-83166262, AX-83197070, AX-83253475, AX-83575267, AX-83587806) which, for unclear reasons, were inconsistently swapped between genotype files and SNP posterior files and incorrectly so in the SNP posterior files
 
-**Build Auxiliary Tools** <br />
+### Build Auxiliary Tools
 Compile three lightweight C tools that enable high-speed processing of large UKBB files: <br />
 ```unpack``` — decode PLINK .bed into Affymetrix genotype structure <br />
 ```split``` — divide binary resources into batch files <br />
@@ -240,7 +240,7 @@ int main(int argc, char **argv) {
 }' > dump.c
 gcc -O3 -o dump dump.c
 ```
-**Split by Batches**
+### Split and Reconstruct Files
 Split sample report file into batch report files (~2 seconds)
 ```
 sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
@@ -309,7 +309,7 @@ sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
     gzip > $batch.AxiomGT1.summary.txt.gz && /bin/rm $batch.summary.bin
 done
 ```
-**Prepare input files required for MoChA WDL** <br />
+### Prepare Input Tables
 Create sample table
 ```
 sed 's/ UKBiLEVEAX_b\([1-9]\) / UKBiLEVEAX_b0\1 /' ukb_sqc_v2.txt | \
