@@ -67,8 +67,8 @@ This phase outputs 2.4 TiB of gzipped Affymetrix batch files that can be consume
 ### System Requirements
 UK Biobank provides genotype and intensity resources in merged chromosome-wide binary formats:
 
-```ukb_cal_chrN_v2.bed``` — genotype calls
-```ukb_int_chrN_v2.bin``` — probe intensities
+```ukb_cal_chrN_v2.bed``` — genotype calls <br />
+```ukb_int_chrN_v2.bin``` — probe intensities <br />
 ```ukb_sqc_v2.txt``` — sample tracker
 
 These formats differ significantly from standard Affymetrix Axiom batch-level deliverables:
