@@ -63,3 +63,12 @@ Unlike other biobanks (FINNGEN, MVP) that distribute microarray batch files dire
 
 Because MoChA requires accurate A/B allele designations and batch-specific intensities, we reconstruct the raw Affymetrix files using the official manifests and UKBB binary sources.
 This phase outputs 2.4 TiB of gzipped Affymetrix batch files that can be consumed directly by the MoChA WDL workflow.
+
+### System Requirements
+UK Biobank provides genotype and intensity resources in merged chromosome-wide binary formats:
+
+```ukb_cal_chrN_v2.bed``` — genotype calls
+```ukb_int_chrN_v2.bin``` — probe intensities
+```ukb_sqc_v2.txt``` — sample tracker
+
+These formats differ significantly from standard Affymetrix Axiom batch-level deliverables:
