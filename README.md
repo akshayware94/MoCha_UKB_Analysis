@@ -104,7 +104,6 @@ These files are essential inputs for reconstructing raw Affymetrix-style outputs
 - Once the JSON is prepared, you can launch the workflow with a standard Cromwell command such as:
 ```
 java -jar cromwell.jar run ukb2txt.wdl --inputs inputs.json
-
 ```
 
 ## ukb2txt — Phase 1: Reconstructing Raw Affymetrix Files for UK Biobank
