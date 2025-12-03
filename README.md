@@ -396,3 +396,16 @@ After reconstructing per-batch Affymetrix files in Phase 1, Phase 2 runs the ful
 - Allele-specific events across all chromosomes (1–22, X, Y, XY, MT)
 
 ## Organizing Outputs from Phase 1
+Phase 1 produces ~2.4 TiB of gzipped Affymetrix files split into 106 genotyping batches:
+```
+Phase1_Reconstructed/
+└── batch_001/
+    ├── *.AxiomGT1.calls.txt.gz
+    ├── *.AxiomGT1.snp-posteriors.txt.gz
+    ├── *.AxiomGT1.summary.txt.gz
+    └── *.AxiomGT1.report.txt.gz
+...
+└── batch_106/
+
+```
+These will be fed directly into MoChA using the MoChA input JSON.
