@@ -425,7 +425,7 @@ Phase1_Reconstructed/
 
 ```
 These will be fed directly into MoChA using the MoChA input JSON.
-Example JSON (inputs/mocha_chrX_inputs.json):
+Example JSON (inputs.json):
 
 ````
 {
@@ -436,11 +436,11 @@ Example JSON (inputs/mocha_chrX_inputs.json):
   "mocha.max_win_size_cm": 10.0,
   "mocha.overlap_size_cm": 2.0,
   "mocha.ref_name": "GRCh38",
-  "mocha.ref_path": "/mnt/data2/UKB_Ukb2txt/Ref",
-  "mocha.manifest_path": "/mnt/data2/UKB_Ukb2txt/Resources",
-  "mocha.data_path": "/mnt/data2/UKB_Ukb2txt/Resources/UKB_Batches",
-  "mocha.sample_tsv_file": "/mnt/data2/UKB_Ukb2txt/Resources/ukb.sample.tsv",
-  "mocha.batch_tsv_file": "/mnt/data2/UKB_Ukb2txt/Resources/ukb.batch.tsv",
+  "mocha.ref_path": "/path to reference genome directory",
+  "mocha.manifest_path": "/Path to /Phase1_Reconstructed",
+  "mocha.data_path": "/Path to /Phase1_Reconstructed",
+  "mocha.sample_tsv_file": "/Path to /Phase1_Reconstructed/ukb.sample.tsv",
+  "mocha.batch_tsv_file": "/Path to /Phase1_Reconstructed/ukb.batch.tsv",
   "mocha.docker_repository": "us.gcr.io/mccarroll-mocha"
 }
 ````
