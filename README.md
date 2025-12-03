@@ -51,7 +51,7 @@ wget https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85
 sudo apt-get install -y bcftools plink
 ```
 ### Docker
-It is also possible to install docker without root privileges, though this is only needed if you want to run Cromwell using the local backend:+
+It is also possible to install docker without root privileges, though this is only needed if you want to run Cromwell using the local backend:
 ```
 $ curl -fsSL http://get.docker.com/rootless | sh
 $ systemctl --user start docker
