@@ -50,7 +50,7 @@ wget https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85
 # Install bcftools and plink
 sudo apt-get install -y bcftools plink
 ```
-### Docker
+### Retrieving the MoChA-WDL Docker image to prepare the execution environment
 It is also possible to install docker without root privileges, though this is only needed if you want to run Cromwell using the local backend:
 ```
 $ curl -fsSL http://get.docker.com/rootless | sh
