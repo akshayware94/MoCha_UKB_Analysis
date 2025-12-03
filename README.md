@@ -394,3 +394,5 @@ After reconstructing per-batch Affymetrix files in Phase 1, Phase 2 runs the ful
 - Mosaic loss of Y (mLOY)
 - Mosaic loss of X (mLOX)
 - Allele-specific events across all chromosomes (1–22, X, Y, XY, MT)
+
+## Organizing Outputs from Phase 1
