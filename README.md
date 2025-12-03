@@ -50,6 +50,22 @@ wget https://github.com/broadinstitute/cromwell/releases/download/85/cromwell-85
 # Install bcftools and plink
 sudo apt-get install -y bcftools plink
 ```
+### Docker
+It is also possible to install docker without root privileges, though this is only needed if you want to run Cromwell using the local backend:+
+```
+$ curl -fsSL http://get.docker.com/rootless | sh
+$ systemctl --user start docker
+$ export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+```
+If you are running Cromwell in a computational environment that does not have internet access, you might have to download the images manually. You can do so with the following command on a node that has internet access:
+```
+DOCKER_REPOSITORY=us.gcr.io/mccarroll-mocha
+DOCKER_TAG=1.20-20240927
+for docker in debian:stable-slim amancevice/pandas:slim \
+  $DOCKER_REPOSITORY/{bcftools,apt,r_mocha,shapeit5,impute5,beagle5,regenie}:$DOCKER_TAG; do
+  docker pull ${docker}
+done
+```
 ## Acquiring and Storing UK Biobank Genotype Intensity Data
 Genotyping was conducted by Affymetrix (now ThermoFisher Scientific) using two closely related, custom-designed arrays. Approximately 50,000 participants were genotyped on the UK BiLEVE Axiom array, while the remaining ~450,000 participants were genotyped on the UK Biobank Axiom array. The released dataset combines results from both arrays, encompassing 805,426 markers with genomic positions reported in GRCh37 coordinates. Genotypes could not be obtained for a small subset of participants (~3%) due to insufficient DNA from their blood samples.
 
