@@ -444,3 +444,60 @@ Example JSON (inputs.json):
   "mocha.docker_repository": "us.gcr.io/mccarroll-mocha"
 }
 ````
+### Running MoChA with Cromwell
+Run the pipeline with:
+```
+java -jar cromwell.jar run mocha.wdl \
+    --inputs inputs.json \
+```
+**Local Backend** <br />
+If you want to use Cromwell without a job scheduler on a local machine or server, you can use the local backend. You will need to create a cromwell.conf configuration file including the following backend stanza:
+```
+backend {
+  default = local
+  providers {
+    local {
+      actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory"
+      config {
+        concurrent-job-limit = 4
+        run-in-background = true
+        filesystems {
+            local {
+                localization: [
+                    "hard-link", "soft-link", "copy"
+                ]
+                caching {
+                    duplication-strategy: [
+                        "hard-link", "soft-link", "copy"
+                    ]
+                    hashing-strategy: "fingerprint"
+                    fingerprint-size: 1048576
+                    check-sibling-md5: false
+                }
+            }
+        }
+
+        runtime-attributes = """
+        String? docker
+        String? docker_user
+        """
+
+        submit = "/usr/bin/env bash ${script}"
+
+        submit-docker = """
+        docker run \
+          --rm -i \
+          ${"--user " + docker_user} \
+          --entrypoint ${job_shell} \
+          -v ${cwd}:${docker_cwd} \
+          ${docker} ${script}
+        """
+
+        root = "cromwell-executions"
+        dockerRoot = "/cromwell-executions"
+      }
+    }
+  }
+}
+```
+As Cromwell by default will submit all tasks that are ready to run, it is imperative that you include a **job limit** to make sure the local machine will not run out of memory. 
